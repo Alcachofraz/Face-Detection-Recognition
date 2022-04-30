@@ -9,12 +9,22 @@ from mtcnn import MTCNN
 
 
 def classifier(classifier, image):
-    if (classifier == 'haar_cascade'):
+    if (classifier == 'haar_cascade_faces'):
         # Find faces:
         faces = cv2.CascadeClassifier(
             'cascades/data/haarcascade_frontalface_alt2.xml').detectMultiScale(image)
         # For each face found:
         for result in faces:
+            x, y, w, h = result
+            x1, y1 = x + w, y + h
+            # Draw rectangle:
+            cv2.rectangle(image, (x, y), (x1, y1), (0, 0, 255), 2)
+    if (classifier == 'haar_cascade_eyes'):
+        # Find faces:
+        eyes = cv2.CascadeClassifier(
+            'cascades/data/haarcascade_eye.xml').detectMultiScale(image)
+        # For each face found:
+        for result in eyes:
             x, y, w, h = result
             x1, y1 = x + w, y + h
             # Draw rectangle:
@@ -40,7 +50,7 @@ else:
 
 while rval:
     rval, frame = cam.read()
-    classifier(classifier='haar_cascade', image=frame)
+    classifier(classifier='haar_cascade_eyes', image=frame)
     cv2.imshow("preview", frame)
     if cv2.waitKey(20) & 0xFF == ord('q'):  # Exit with 'q'
         break
