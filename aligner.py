@@ -86,13 +86,11 @@ class Aligner:
     def alignObjectToFace(self, object, face, object_left_eye_center, object_right_eye_center):
         faces = self.findFaces(face)
         if (len(faces) < 1):
-            print("No faces detected")
-            exit()
+            return None
         face_area, x, y = faces[0]
         eyes = self.findEyes(face_area)
         if (len(eyes) < 2):
-            print("No eyes detected")
-            exit()
+            return None
         x1, y1, w1, h1 = eyes[0]  # Left eye area
         x1 += x
         y1 += y

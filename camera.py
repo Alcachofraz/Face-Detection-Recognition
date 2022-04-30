@@ -31,16 +31,19 @@ def classifier(classifier, image):
 
 
 cv2.namedWindow("preview")
-vc = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(0)
 
-if vc.isOpened():  # Try to get the first frame
-    rval, frame = vc.read()
+if cam.isOpened():  # Try to get the first frame
+    rval, frame = cam.read()
 else:
     rval = False
 
 while rval:
-    rval, frame = vc.read()
+    rval, frame = cam.read()
     classifier(classifier='haar_cascade', image=frame)
     cv2.imshow("preview", frame)
     if cv2.waitKey(20) & 0xFF == ord('q'):  # Exit with 'q'
         break
+
+cam.release()
+cv2.destroyAllWindows()
