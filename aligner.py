@@ -4,7 +4,7 @@ import cv2
 
 class Aligner:
     def __init__(self, desired_left_eye_position=(16, 24), desired_right_eye_position=(31, 24),
-                 desired_face_width=46, desired_face_height=56, expected_eye_portion=0.1, eye_scale_factor=1.2, eye_min_neighbors=3, face_scale_factor=1.1, face_min_neighbors=3):
+                 desired_face_width=46, desired_face_height=56, eye_scale_factor=1.2, eye_min_neighbors=3, face_scale_factor=1.1, face_min_neighbors=3, eye_min_size=[30, 30], face_min_size=[40, 40]):
         self.desired_left_eye_position = desired_left_eye_position
         self.desired_face_width = desired_face_width
         self.desired_face_height = desired_face_height
@@ -14,7 +14,6 @@ class Aligner:
             'cascades/data/haarcascade_eye.xml')
         self.desired_left_eye_position = desired_left_eye_position
         self.desired_right_eye_position = desired_right_eye_position
-        self.expected_eye_portion = expected_eye_portion
         self.eye_scale_factor = eye_scale_factor
         self.eye_min_neighbors = eye_min_neighbors
         self.face_scale_factor = face_scale_factor
@@ -30,7 +29,7 @@ class Aligner:
         return ([(image[y:y+h, x:x+w], x, y) for (x, y, w, h) in faces])
 
     def findEyes(self, image):
-        return self.eye_cascade.detectMultiScale(image, scaleFactor=self.eye_scale_factor, minNeighbors=self.eye_min_neighbors, minSize=[10, 10])
+        return self.eye_cascade.detectMultiScale(image, scaleFactor=self.eye_scale_factor, minNeighbors=self.eye_min_neighbors, minSize=[30, 30])
 
     def alignFace(self, image):
         faces = self.cutFaces(image)
@@ -40,7 +39,6 @@ class Aligner:
         eyes = self.findEyes(face)
         if (len(eyes) < 2):
             return None
-        print(len(eyes))
         x1, y1, w1, h1 = eyes[0]  # Left eye area
         x1 += x
         y1 += y

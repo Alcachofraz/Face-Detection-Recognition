@@ -38,3 +38,6 @@ classifier(classifier='haar_cascade', image=image)
 cv2.imshow('Image', image)
 while cv2.waitKey(20) & 0xFF != ord('q'):
     pass
+
+cam.release()
+cv2.destroyAllWindows()
