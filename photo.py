@@ -7,7 +7,7 @@ from mtcnn import MTCNN
 # pip install mtcnn
 # pip install tensorflow
 
-image_raw = 'friends.jpg'
+image_raw = 'friends/friends.jpg'
 
 
 def classifier(classifier, image):
