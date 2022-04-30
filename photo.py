@@ -14,7 +14,7 @@ def classifier(classifier, image):
     if (classifier == 'haar_cascade'):
         # Find faces:
         faces = cv2.CascadeClassifier(
-            'cascades/data/haarcascade_eye.xml').detectMultiScale(image)
+            'cascades/data/haarcascade_frontalface_alt2.xml').detectMultiScale(image)
         # For each face found:
         for result in faces:
             x, y, w, h = result
